@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/122679a4bd.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://rice.box.com/shared/static/eykmryvb798qkg2u4mpss73ovrrwpd5x.css">
+  <!--<link rel="stylesheet" href="/OTTCSS0925.css">-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/82bd2644d5.js"></script>
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  
+</head>
+
+<!--NEW CSS-->
+<style>
+ 
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --accent: #13133E;
+    --gray: ##44474F;
+    --black: #111111;
+    --white: #ffffff;
+    --gray-bg: #f5f5f5;
+    --gray-border: #e0e0e0;
+    --nav-height: 64px;
+    --transition: 0.2s ease;
+  }
+
+  body {
+    font-family: MalloryBook, sans-serif;
+    color: var(--black);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV WRAPPER ── */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--white);
+  }
+
+  .nav-bar-outer {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 2rem;
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    height: var(--nav-height);
+    position: relative;
+  }
+
+  .nav-items {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  /* ── NAV ITEM BUTTONS ── */
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-item > button,
+  .nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 1rem;
+    font-family: MalloryBook, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gray);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    transition: color var(--transition);
+  }
+
+  .nav-item > button:hover,
+  .nav-item > a:hover {
+    color: var(--accent);
+  }
+
+  .nav-item.active > button {
+    color: var(--accent);
+  }
+
+  /* Arrow indicator */
+  .nav-item > button .nav-indicator {
+    font-size: 0.65rem;
+    line-height: 1;
+    transition: transform 0.3s ease, color var(--transition);
+    display: inline-block;
+  }
+
+  .nav-item.active > button .nav-indicator {
+    color: var(--accent);
+    transform: rotate(90deg);
+  }
+
+  /* ── CTA BUTTONS ── */
+  .nav-ctas {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .cta-btn {
+    padding: 0.6rem 1.25rem;
+    font-family: MalloryBook, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--transition), transform 0.15s ease;
+    border-radius:6px;
+  }
+
+  .cta-btn:hover {
+    background: #FFF;
+    color: #13133E;
+    /*transform: translateY(-1px);*/
+  }
+
+  /* ── DIVIDER LINE ── */
+  .nav-divider {
+    height: 1px;
+    background: var(--gray-border);
+    width: 100%;
+  }
+
+  /* ══════════════════════════════════════════
+     FULL-WIDTH MEGA MENU (bounded to nav-bar)
+     ══════════════════════════════════════════ */
+  .dropdown-panel-full {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(246, 249, 251, 1);;
+    border: 1px solid var(--gray-border);
+    border-top: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease;
+    z-index: 1001;
+  }
+
+  .dropdown-panel-full.open {
+    max-height: 500px;
+    opacity: 1;
+  }
+
+  .dropdown-panel-full .dropdown-inner {
+    padding: 2rem 2rem 2.5rem;
+  }
+
+  .dropdown-mega {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .mega-col h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 1.25rem;
+  }
+
+  .mega-col ul {
+    list-style: none;
+  }
+
+  .mega-col ul li {
+    margin-bottom: 0.9rem;
+  }
+
+  .mega-col ul li:last-child {
+    margin-bottom: 0;
+  }
+
+
+
+  .mega-col ul li a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    transition: color var(--transition);
+    line-height: 1.4;
+  }
+
+  .mega-col ul li a:hover {
+    color: var(--accent);
+  }
+
+  /* ══════════════════════════════════════════
+     COMPACT DROPDOWN (left-aligned under item)
+     ══════════════════════════════════════════ */
+  .dropdown-compact {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 270px;
+    background: var(--gray-bg);
+    border: 1px solid var(--gray-border);
+    border-top: none;
+    padding: 1.75rem 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 1001;
+  }
+
+  .nav-item.active .dropdown-compact {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-compact ul {
+    list-style: none;
+  }
+
+  .dropdown-compact ul li {
+    margin-bottom: 1rem;
+  }
+
+  .dropdown-compact ul li:last-child {
+    margin-bottom: 0;
+  }
+
+
+
+
+
+  .dropdown-compact ul li a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    transition: color var(--transition);
+    line-height: 1.4;
+  }
+
+  .dropdown-compact ul li a:hover {
+    color: var(--accent);
+  }
+
+
+  /* ── OVERLAY ── */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    top: calc(var(--nav-height) + 1px);
+    z-index: 999;
+    display: none;
+  }
+
+  .nav-overlay.visible {
+    display: block;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .nav-bar-outer {
+      padding: 0 1rem;
+    }
+    .nav-item > button,
+    .nav-item > a {
+      font-size: 0.85rem;
+      padding: 0.5rem 0.65rem;
+    }
+    .cta-btn {
+      font-size: 0.78rem;
+      padding: 0.55rem 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-bar {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 0.75rem 0;
+      gap: 0.25rem;
+      justify-content: flex-start;
+    }
+    .nav-items {
+      flex-wrap: wrap;
+    }
+    .nav-ctas {
+      margin-left: 0;
+      width: 100%;
+      margin-top: 0.25rem;
+    }
+    .dropdown-mega {
+      grid-template-columns: 1fr !important;
+    }
+    .dropdown-compact {
+      left: 0;
+    }
+  }
+
+  /* ══════════════════════════════════════════
+   CALLOUT BLURB + IMAGE SECTION
+   ══════════════════════════════════════════ */
+
+.callout-section {
+  position: relative;
+  max-width: 1200px;      /* was 1100px — now matches ott-split-container */
+  width: 100%;
+  margin: 0 auto 2% auto; /* centers it and adds bottom spacing */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: clamp(320px, 42vw, 520px);
+}
+
+/* --- Callout Image Area --- */
+.callout-image-wrapper {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  min-height: clamp(320px, 42vw, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;          /* was 1 — now sits on top of the text card */
+  margin-left: -100px;
+}
+
+.callout-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  padding: 20px;
+}
+
+/* --- Callout Text Card --- */
+.callout-text-card {
+  position: relative;
+  grid-column: 1 / 3;
+  grid-row: 1;
+  z-index: 2;
+  align-self: center;
+  justify-self: start;
+  max-width: clamp(340px, 50vw, 580px);
+  background: #0f1a3c;
+  color: #ffffff;
+  padding: clamp(28px, 4vw, 52px) clamp(24px, 4.5vw, 56px) clamp(24px, 3.8vw, 48px);
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(15, 26, 60, .35);
+  margin-left: 0;
+}
+
+.callout-text-card h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  letter-spacing: .01em;
+  margin-bottom: clamp(12px, 1.6vw, 20px);
+  color: #ffffff;
+}
+
+.callout-text-card p {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.72;
+  color: #c8c8cc;
+  font-weight: 300;
+  margin-bottom: clamp(18px, 2.2vw, 28px);
+}
+
+/* --- Callout CTA Link --- */
+.callout-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 40px;
+  padding: clamp(10px, 1.2vw, 14px) clamp(16px, 2vw, 24px);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: .02em;
+  transition: background .25s ease, border-color .25s ease;
+}
+
+.callout-cta:hover {
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.4);
+}
+
+.callout-cta i {
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: transform .25s ease;
+}
+
+.callout-cta:hover i {
+  transform: translateX(4px);
+}
+
+/* --- Callout Responsive: graceful scale-down --- */
+@media (max-width: 1200px) {
+  .callout-text-card {
+    max-width: 52%;
+  }
+}
+
+/* --- Callout Responsive: mobile stack --- */
+@media (max-width: 576px) {
+  .callout-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    
+  }
+  .callout-image-wrapper {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 240px;
+    border-radius: 6px 6px 0 0;
+    margin-left: 0;
+  }
+  .callout-text-card {
+    grid-column: 1;
+    grid-row: 2;
+    max-width: 100%;
+    border-radius: 0 0 6px 6px;
+    padding: 32px 24px 28px;
+    box-shadow: none;
+  }
+}
+
+
+  /* 
+  
+  ========== Staff Blurb Card ==========
+  
+  CSS FOR STAFF BLURB MESSAGE CARD
+  
+  =======================================
+  */
+ 
+  .staff-blurb {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 3rem auto;
+    padding: 2rem 15px;
+    box-sizing: border-box;
+  }
+ 
+  /* --- Photo Frame with Gradient Border --- */
+  .staff-blurb__photo-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 340px;
+    height: 400px;
+  }
+ 
+  .staff-blurb__photo-wrap::before {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom right,
+      #4dd9c0,
+      #a4e64c
+    );
+    z-index: 0;
+  }
+ 
+  .staff-blurb__photo-wrap img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+ 
+  /* --- Text Content --- */
+  .staff-blurb__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+ 
+  .staff-blurb__name {
+    font-family: 'CopernicusMedium', serif;
+    font-size: 2.75rem;
+    font-weight: bold;
+    color: #00205B;
+    line-height: 1.1;
+    margin: 0;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+  }
+ 
+  .staff-blurb__title {
+    font-family: MalloryBook, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #44474F;
+    margin: 0.5rem 0 0 0;
+  }
+ 
+  .staff-blurb__statement {
+    font-family: MalloryBook, sans-serif;
+    font-size: 1rem;
+    line-height: 1.4rem;
+    color: #00205B;
+    margin: 0.75rem 0 0 0;
+    max-width: 710px;
+  }
+ 
+  .staff-blurb__btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.65rem 1.5rem;
+    font-family: MalloryBook, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: #9b59b6;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: fit-content;
+  }
+ 
+  .staff-blurb__btn:hover {
+    background-color: #7d3c98;
+  }
+ 
+  /* --- Responsive: Tablet (1024px) --- */
+  @media (max-width: 1024px) {
+    .staff-blurb {
+      gap: 3rem;
+    }
+ 
+    .staff-blurb__photo-wrap {
+      width: 280px;
+      height: 340px;
+    }
+ 
+    .staff-blurb__name {
+      font-size: 2.25rem;
+    }
+ 
+    .staff-blurb__statement {
+      font-size: 1.1rem;
+      line-height: 1.5rem;
+    }
+  }
+ 
+  /* --- Responsive: Small Tablet / Large Mobile (768px) --- */
+  @media (max-width: 768px) {
+    .staff-blurb {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+      padding: 1.5rem 15px;
+    }
+ 
+    .staff-blurb__photo-wrap {
+      width: 260px;
+      height: 310px;
+    }
+ 
+    .staff-blurb__name {
+      font-size: 2.25rem;
+    }
+ 
+    .staff-blurb__title {
+      font-size: 0.9rem;
+    }
+ 
+    .staff-blurb__statement {
+      width: 90%;
+      font-size: 1.1rem;
+      line-height: 1.5rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+ 
+    .staff-blurb__info {
+      align-items: center;
+    }
+  }
+ 
+  /* --- Responsive: Mobile (480px) --- */
+  @media (max-width: 480px) {
+    .staff-blurb {
+      padding: 1rem 10px;
+      margin: 2rem auto;
+    }
+ 
+    .staff-blurb__photo-wrap {
+      width: 220px;
+      height: 270px;
+    }
+ 
+    .staff-blurb__name {
+      font-size: 1.75rem;
+    }
+ 
+    .staff-blurb__title {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+    }
+ 
+    .staff-blurb__statement {
+      width: 100%;
+      font-size: 0.95rem;
+      line-height: 1.4rem;
+      padding: 0 0.5rem;
+    }
+ 
+    .staff-blurb__btn {
+      font-size: 0.85rem;
+      padding: 0.6rem 1.25rem;
+    }
+  }
+ 
+  /* --- Responsive: Small Mobile (320px) --- */
+  @media (max-width: 320px) {
+    .staff-blurb__photo-wrap {
+      width: 180px;
+      height: 220px;
+    }
+ 
+    .staff-blurb__name {
+      font-size: 1.5rem;
+    }
+ 
+    .staff-blurb__title {
+      font-size: 0.75rem;
+    }
+ 
+    .staff-blurb__statement {
+      font-size: 0.85rem;
+      line-height: 1.3rem;
+    }
+  }
+</style>
+
+<!--MAIN CSS-->
+
+<style>
+
+  .mega-col h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 1.25rem;
+}
+
+.ott-footer-heading {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+    color: rgb(35, 57, 93);
+    position: relative;
+}
+   
+   /* CSS for Sticky Header with Collapsible Video */
+
+/* Video container styles */
+
+  h1, h2, h3, h4, h5, h6 {
+    word-break: keep-all
+  }
+
+.header-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* YouTube Player Styles */
+#youtube-player-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+#player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ott-pg-title span.slogan{
+  font-size: 2rem; 
+}
+
+/*carousel*/
+
+.ott-c-container {
+  width: 90%;
+  max-width: 1500px;
+  height: 100%;
+  max-height: 450px;
+  margin: 0 auto 5% auto;
+}
+
+/* Button styles */
+.mds_btn--wrapper .mds_btn-blue {
+  background: #0A509E;
+  padding:.875rem 1.5rem;
+  margin: 2.25rem auto 4rem;
+  border-radius: 4px;
+  color: #fff !important;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  display: inline-block;
+}
+
+.mds_btn--wrapper .mds_btn-blue:hover {
+  background-color: #005B50;
+  color: #fff !important;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+/* Caption styles */
+.ott-carousel-caption h2 {
+  font-size: clamp(2.027rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #00205b;
+}
+
+.contrast {
+  color: #00205b;
+}
+
+.descript-font {
+  font-size: 1.25rem;
+  padding: 0;
+  line-height: 1.25;
+
+  word-break: keep-all;
+}
+/* Main carousel structure */
+.ott-carousel-tablist {
+  background-color: #eee;
+  position: relative;
+  height: 100%;
+  min-height: 300px;
+}
+
+.ott-carousel-tablist .carousel-inner {
+  position: relative;
+  height: 100%;
+}
+
+.ott-carousel-tablist .ott-carousel-item {
+  display: none;
+  min-height: 300px;
+  max-height: 700px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Default background when no image */
+  overflow: visible;
+}
+
+.ott-carousel-tablist .ott-carousel-item.active {
+  display: block;
+}
+
+/* Image styles */
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-image.hidden {
+  display: none;
+}
+
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-image a {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-image a img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Link styles */
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-caption a {
+  cursor: pointer;
+  color: #0A509E;
+}
+
+/* Caption positioning */
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-caption  {
+  position: absolute;
+  right: 10%;
+  top: 20%;
+  left: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #00205b;
+  text-align: center;
+}
+
+.no-image .ott-carousel-caption{
+  margin-top: 5%;
+}
+
+/* When no image is present, position caption normally */
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-image.hidden + .overlay-slider--extraDark .ott-carousel-caption,
+.ott-carousel-tablist .ott-carousel-item .no-image .ott-carousel-caption {
+  position: static;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.ott-carousel-tablist .ott-carousel-item .ott-carousel-caption p {
+  font-size: 1.266rem;
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+/* Controls container */
+.ott-carousel-tablist .controls {
+  box-sizing: border-box;
+  position: absolute;
+  top: 1em;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  padding: 0.25em 1.25em 0;
+}
+
+.ott-carousel-tablist .tab-wrapper {
+  flex: 1 1 auto;
+  height: 30px;
+  text-align: center;
+}
+
+/* Play/Pause button */
+.ott-carousel-tablist .rotation {
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  z-index: 10;
+}
+
+.ott-carousel-tablist .svg-play .background {
+  stroke: black;
+  fill: black;
+  stroke-width: 1px;
+  opacity: 0.6;
+}
+
+.ott-carousel-tablist .svg-play .border {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2px;
+}
+
+.ott-carousel-tablist .svg-play .pause {
+  stroke-width: 4;
+  fill: transparent;
+  stroke: transparent;
+}
+
+.ott-carousel-tablist .svg-play .play {
+  stroke-width: 1;
+  fill: transparent;
+  stroke: transparent;
+}
+
+.ott-carousel-tablist .pause .svg-play .pause,
+.ott-carousel-tablist .play .svg-play .play {
+  fill: white;
+  stroke: white;
+}
+
+.ott-carousel-tablist .rotation:focus .svg-play .background,
+.ott-carousel-tablist .rotation:hover .svg-play .background,
+.ott-carousel-tablist .rotation:hover .svg-play .border {
+  fill: #005a9c;
+  stroke: #005a9c;
+  opacity: 1;
+}
+
+.ott-carousel-tablist .rotation:focus .svg-play .border {
+  stroke: white;
+}
+
+/* Tab styles */
+.ott-carousel-tablist [role="tablist"] {
+  box-sizing: border-box;
+  border: 0 transparent solid;
+  border-radius: 13px;
+  display: inline-block;
+  padding-top: 2px;
+  height: 30px;
+  background-color: rgba(246, 249, 251, 0.95);
+}
+
+.ott-carousel-tablist [role="tablist"].focus {
+  border-width: 2px;
+  border-color: white;
+  padding-top: 0;
+  background-color: #005a9c;
+}
+
+.ott-carousel-tablist [role="tab"] {
+  position: relative;
+  top: -2px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 34px;
+}
+
+.ott-carousel-tablist [role="tab"] circle.border {
+  display: none;
+  z-index: 12;
+}
+
+.ott-carousel-tablist [role="tab"] circle.tab {
+  z-index: 16;
+}
+
+.ott-carousel-tablist [role="tab"] circle.tab-background {
+  stroke: #ADC7DC;
+  fill: #ADC7DC;
+  stroke-width: 2px;
+  opacity: 0.6;
+  z-index: 14;
+}
+
+.ott-carousel-tablist [role="tab"] circle.tab,
+.ott-carousel-tablist [role="tab"] circle.border {
+  stroke: white;
+  fill: transparent;
+  stroke-width: 2px;
+}
+
+.ott-carousel-tablist [role="tab"][aria-selected="true"] circle.tab {
+  fill: white;
+}
+
+.ott-carousel-tablist [role="tab"]:focus circle.border {
+  display: block;
+  fill: #005a9c;
+  stroke: #fff;
+}
+
+.ott-carousel-tablist [role="tablist"].focus circle.tab-background {
+  stroke: #005a9c;
+  fill: #005a9c;
+}
+
+.ott-carousel-tablist [role="tab"]:hover circle.tab-background {
+  fill: white;
+  stroke: white;
+  opacity: 1;
+}
+
+.ott-carousel-tablist [role="tab"]:hover circle.border,
+.ott-carousel-tablist [role="tab"]:hover circle.tab {
+  fill: #005a9c;
+  stroke: #005a9c;
+  opacity: 1;
+}
+
+.ott-carousel-tablist [role="tab"][aria-selected="true"]:hover circle.tab {
+  fill: white;
+}
+
+/* Overlay styling */
+.overlay-slider--extraDark {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: background .3s ease;
+  background: rgba(0, 0, 0, .5);
+}
+
+/* When no image is used, make the overlay static */
+.ott-carousel-image.hidden + .overlay-slider--extraDark,
+.no-image {
+  position: static;
+  background: #ffffff;
+  height: auto;
+}
+
+/* More accessible carousel styles */
+.ott-carousel-tablist-moreaccessible {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  border: #eee solid 4px;
+  border-radius: 5px;
+}
+
+.ott-carousel-tablist-moreaccessible .ott-carousel-items,
+.ott-carousel-tablist-moreaccessible .ott-carousel-items.focus {
+  padding: 0;
+  border: none;
+}
+
+.ott-carousel-tablist-moreaccessible .ott-carousel-items.focus .ott-carousel-image a {
+  padding: 2px;
+  border: 3px solid #005a9c;
+}
+
+/* Fix for focus visibility */
+.ott-carousel-tablist .ott-carousel-items.focus {
+  padding: 2px;
+  border: solid 3px #005a9c;
+}
+
+
+
+</style>
+
+<style>
+  /* MOBILE-ONLY FIXES - ADD THESE TO YOUR EXISTING CSS */
+/* These rules only apply to mobile devices and won't affect desktop */
+
+@media (max-width: 768px) {
+  .menu-bars {
+    display: none;
+  }
+  
+  .maximize-button {
+    display: none !important; /* Ensure button is never shown on mobile */
+  }
+
+
+  *{
+    box-sizing: border-box;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+  }
+}
+
+
+/* Mobile-only fixes starting at tablet size and below */
+@media screen and (max-width: 768px) {
+  /* Add body padding only on mobile to prevent text cutoff */
+  body {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Fix container margins to prevent text being cut off */
+  .ott-split-container {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+
+  /* Reduce padding in split sections to give more space for text */
+  .ott-split-half {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Add better text wrapping and spacing for titles/headings */
+  h1.ott-pg-title {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 2.5rem; /* Slightly smaller on mobile */
+
+  }
+
+  h3.sectitle {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Fix text spacing in icon grid */
+  .ott-icon-link span {
+    padding: 0 0.3rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Add spacing between sections to prevent text running together */
+  .ott-grid-section {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Ensure any intro text has proper spacing */
+  p.ottcont {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Phone-specific fixes */
+@media screen and (max-width: 480px) {
+  /* Increase body padding on very small screens */
+  body {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Give more breathing room to main container */
+  .ott-split-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Further reduce icon grid gaps to prevent overflow */
+  .ott-icon-grid {
+    grid-gap: 0.5rem;
+  }
+
+  /* Reduce icon link padding to fit better */
+  .ott-icon-link {
+    padding: 0.5rem 0.3rem;
+  }
+
+  /* Make text smaller to prevent cutoff */
+  .ott-icon-link span {
+    font-size: 0.7rem;
+    line-height: 1.1;
+    padding: 0 0.2rem;
+  }
+
+  .ott-pg-title span.slogan{
+    font-size: 1rem;
+  }
+
+  /* Smaller icons to leave more room for text */
+  .ott-icon-link i {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Better title sizing */
+  h1.ott-pg-title {
+    font-size: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Add margin to prevent sections from touching */
+  .ott-grid-section {
+    margin-bottom: 2rem;
+  }
+
+  /* Fix any content paragraphs */
+  p.ottcont {
+    font-size: 1.1rem;
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  .ott__content__container .carousel{
+  width: 100%;
+}
+
+
+  .ott-c-container{
+    width: 100%;
+    margin: -40% auto 40% auto;
+  }
+
+  .descript-font {
+    font-size: 1rem;
+
+}
+
+}
+
+/* Very small screens (older phones) */
+@media screen and (max-width: 320px) {
+  /* Maximum padding for smallest screens */
+  body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Ensure container doesn't overflow */
+  .ott-split-container {
+    width: 100%;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* Minimal padding for icon sections */
+  .ott-split-half {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Very small text for tight spaces */
+  .ott-icon-link span {
+    font-size: 0.6rem;
+    line-height: 1.0;
+  }
+
+  /* Smaller icons for very small screens */
+  .ott-icon-link i {
+    font-size: 2.5rem;
+  }
+
+  /* Compact title */
+  h1.ott-pg-title {
+    font-size: 1.6rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Additional safety measures for mobile text */
+@media screen and (max-width: 768px) {
+  /* Prevent any element from causing horizontal overflow */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ensure all text elements have proper word breaking */
+   p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+
+
+
+
+  /* Fix for Research Rice Review title if it exists */
+  [class*="research"], [class*="review"] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Fix for any announcement text */
+  [class*="announcement"] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  /* Ensure proper spacing for Learn More button */
+  .mds_btn-blue {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+  }
+}
+
+/* Landscape phone orientation fixes */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  /* Reduce vertical margins when in landscape */
+  h1.ott-pg-title {
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+
+  .ott-grid-section {
+    margin-bottom: 1rem;
+  }
+
+
+  .ott-carousel-tablist [role="tablist"]{
+        transform: translateY(-30px);
+  }
+
+}
+
+/* Target specific problem areas from your screenshots */
+@media screen and (max-width: 480px) {
+  /* Fix for the "Technology Transfer at Rice University" title being cut */
+  .main-title, 
+  .ott-pg-title,
+  h1[class*="title"] {
+    text-align: center;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(100% - 2rem);
+  }
+
+  /* Fix for icon text being cut off */
+  .ott-icon-link span,
+  [class*="icon"] span {
+    text-align: center;
+    padding: 0 0.25rem !important;
+    display: block;
+    width: 100%;
+  }
+
+  /* Fix spacing between different content blocks */
+  .ott-split-half + .ott-split-half {
+    margin-top: 1.5rem;
+  }
+
+  /* Add breathing room around entire page content */
+  .ott-split-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 64rem) {  
+  .ott-carousel-tablist .ott-carousel-item .ott-carousel-caption {
+    top: 15%;
+  }
+  
+  .ott-carousel-caption h2 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    line-height: 1;
+    margin-bottom: 1rem;
+    width: 90%;
+    margin: 2.5% auto;
+  }
+  
+  /*.hidden-xs {
+    display: none;
+  }*/
+
+}
+
+/* For screen sizes smaller than 768px (Bootstrap's sm breakpoint) */
+@media (max-width: 48rem) {
+  /*.hidden-sm {
+    display: none;
+  }*/
+  
+  .ott-carousel-tablist .ott-carousel-item .ott-carousel-caption {
+    top: 10%;
+  }
+}
+
+</style>
+
+<!-- NAV -->
+<header class="site-nav">
+  <div class="nav-bar-outer">
+    <div class="nav-bar">
+      <ul class="nav-items">
+
+        <!-- RESEARCH — multi-column → mega panel -->
+        <li class="nav-item" data-panel="research" data-type="full">
+          <button aria-expanded="false">
+            Research &amp; Rice Community <i class="fa-solid fa-chevron-right nav-indicator"></i>
+          </button>
+        </li>
+
+        <!-- INDUSTRY — single-column → compact dropdown -->
+        <li class="nav-item" data-panel="industry" data-type="compact">
+          <button aria-expanded="false">
+            Industry Partners <i class="fa-solid fa-chevron-right nav-indicator"></i>
+          </button>
+          <div class="dropdown-compact" id="panel-industry">
+            <ul>
+              <li><a href="https://research.rice.edu/ott/licensing">Licensing at Rice</a></li>
+              <li><a href="https://research.rice.edu/ott/revenue-distributions-rice-university">Revenue Sharing at Rice</a></li>
+              <li><a href="https://research.rice.edu/ott/startups">Rice Startups</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- ABOUT — single-column → compact dropdown -->
+        <li class="nav-item" data-panel="about" data-type="compact">
+          <button aria-expanded="false">
+            About <i class="fa-solid fa-chevron-right nav-indicator"></i>
+          </button>
+          <div class="dropdown-compact" id="panel-about">
+            <ul>
+              <li><a href="https://research.rice.edu/ott/bio">Who is OTT</a></li>
+              <li><a href="https://research.rice.edu/ott/staff">Staff</a></li>
+              <li><a href="https://research.rice.edu/ott/t3">OTT T3 Training Program</a></li>
+              <li><a href="#">OTT Office Hours</a></li>
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+
+      <div class="nav-ctas">
+        <a href="https://rice.wellspringsoftware.net/kms/onlinesubmissions/submissionform/?survey_id=6" class="cta-btn" target="_blank">Submit Disclosure</a>
+        <a href="https://rice.flintbox.com/technologies" class="cta-btn" target="_blank">Available Technologies</a>
+      </div>
+
+      <!-- RESEARCH mega panel — inside nav-bar so it's bounded -->
+      <div class="dropdown-panel-full" id="panel-research">
+        <div class="dropdown-inner dropdown-mega" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="mega-col">
+            <h3>Invention</h3>
+            <ul>
+              <li><a href="https://research.rice.edu/ott/disclosures">Submitting Disclosures at Rice</a></li>
+              <li><a href="https://rice.wellspringsoftware.net/kms/onlinesubmissions/submissionform/?survey_id=6" target="_blank">Online Invention Disclosures</a></li>
+              <li><a href="https://policy.rice.edu/333" target="_blank">Rice IP Policy</a></li>
+              <li><a href="https://research.rice.edu/ott/rice-new-ip-policy">IP Policy FAQs</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h3>Patents</h3>
+            <ul>
+              <li><a href="https://research.rice.edu/ott/patents">Patent Prosecution at Rice</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h3>Contracts</h3>
+            <ul>
+              <li><a href="https://research.rice.edu/ott/contracts">Research Contracts at Rice</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav-divider"></div>
+</header>
+
+<!-- OVERLAY -->
+<div class="nav-overlay" id="navOverlay"></div>
+
+<body>
+
+  
+
+
+  <div class="ott__content__container.home" style ="margin: 5% auto 5% auto">
+
+    <h1 class="ott-pg-title" style="font-size: 5rem; margin: 1.5% auto 1.5% auto;">Technology Transfer </br>at <span style="color: #222d65; font-weight: bold;">Rice University</span>
+        <br/>
+        <span class="slogan">The nexus where world-class research meets real-world application</span>
+    </h1>
+
+  </div>
+
+
+      <section class="callout-section">
+        <!-- Image -->
+        <div class="callout-image-wrapper">
+          <img src="https://dl.boxcloud.com/api/2.0/internal_files/2036369704448/versions/2248556709248/representations/png_paged_2048x2048/content/1.png?access_token=1!ThrdymiPDeo6thAxCur5r8kaAv3iBzF0sxZ4i6WhT6fiqjvHOgTJPlFgA-zYp9PE07srXvsVv5M1xm-gN6XDkI16LAkd0MI8Y-ewU6xGQLnzqrL3eu3am0ssiA4qvhVH_VOu_90-WwvHY6w0wvTUdCNl-EmWzNjb8D8G4cVD_nx9esFMcaZBfz39E6JRxuofywG4_ja324rQfYMUCpQsFxUQ4niczUhBOvidqASzQsG7eg0pUdjanveqcSQVBlPCl3EExHL5msm12BL0qtu_7uJ7mTD2Yo3UzQMyMAvRthgrr6ibmw2B9OoU8zwbIxOjLgsfW_d2_6SsQ14SEeuNOcoLPOiY7kgdd_x3aoL_uDr_lkv1h76vF8NP_ScglhIRqqjYsiG6d8F94VEjQe7Xr_13jpey216E3BEftlICI5c70oCIDt8fHg2evqudWtIaUVRWAfPsF70tS_U8IibrGKSBYrIH994wy-STJVqXLsMtC0hdDf5b9blBKdUUwsR9FgGQkF_14IH4gQ7b9yO8Dq_HdmDVicAsfN7QK2aRvSgn0z6s_BdEN4CX3H7lBeZ5BdZX4dTOEz41V-IC8gB9qkUIyshM6o3uZYPSsXdutk0_l_Q2K3qON8vrCTM0Q8KyAdpzraVBym73u_-JawvKULmIVT1ac8Ec2HifiQwxTqNHuCGeeSjNNwFwQmnuW3Z46j8vRpOIlLALaCVQnN9wwUjeTeHODv1wNO49md53zpsWuDi1LkBsCmPcnHpHyrEqCDfxaCKoCe2aKs6pA8gmA23sfhCf7wsS-ZihWgmzRkvYof4aQqMY8_57jT_jL_G9HYVsO2UBdkBDOIiYwHOSAo71ThjzqUiiVvg.&shared_link=https%3A%2F%2Frice.app.box.com%2Fs%2F39km9sbzuc7ni9dlziyt56cublkl2591&box_client_name=box-content-preview&box_client_version=3.23.0" alt="Rice University Crest">
+        </div>
+
+        <!-- Text Blurb -->
+        <div class="callout-text-card">
+          <h2>Rice IP Policy Revised</h2>
+          <p>
+            Key updates include streamlining the licensing royalty distribution process for Rice technologies,  
+            clarify disclosure expectations for sponsored research, address student internships and externships, 
+            and streamline overall language throughout for greater clarity and consistency.
+          </p>
+          <a href="https://policy.rice.edu/333" class="callout-cta">
+            Read the full policy
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <div class="staff-blurb">
+  <!-- Photo — replace src and alt -->
+    <div class="staff-blurb__photo-wrap">
+      <img 
+        src="/psteppc.png" 
+        alt="Staff member headshot"
+      >
+  </div>
+ 
+  <!-- Details — replace name, title, statement, and link -->
+    <div class="staff-blurb__info">
+      <h2 class="staff-blurb__name">Patricia Stepp</h2>
+      <p class="staff-blurb__title">Assistant Vice President for Technology Transfer</p>
+      <p class="staff-blurb__statement">Welcome to the Office of Technology Transfer (OTT) at Rice University. 
+                                        We are the catalyst for transforming groundbreaking research into global impact. 
+                                        As the university’s innovation engine,  we partner directly with Rice’s faculty, staff, 
+                                        and students to propel cutting-edge discoveries out of the lab and into the marketplace.
+                                      
+                                      <br/><br/>
+
+                                        To our external partners, investors, and industry colleagues: A massive welcome to you. 
+                                        We want you to see Rice as your premier hub for innovation. 
+                                        Reach out, tap into what we are building here, and let’s partner to shape the future together.
+                                      </p>
+
+      <a href="https://research.rice.edu/ott/staff" class="staff-blurb__btn">Our Team</a>
+    </div>
+  </div>
+  
+
+    <div class="ott-split-container clearfix">
+        <!-- Left Side: 4-Button Icon Grid -->
+        <div class="ott-split-half ott-grid-section">
+            <div class="ott-icon-grid">
+                <!-- Grid Button 1 -->
+                <div class="ott-icon-button">
+                  <a href="https://research.rice.edu/ott/disclosures" class="ott-icon-link">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Disclosures</span>
+                </a>
+      
+                </div>
+                <!-- Grid Button 2 -->
+                <div class="ott-icon-button">
+                  <a href="https://research.rice.edu/ott/contracts" class="ott-icon-link">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Contracts</span>
+                </a>
+      
+                </div>
+                <!-- Grid Button 3 -->
+                <div class="ott-icon-button">
+                    <a href="https://research.rice.edu/ott/patents" class="ott-icon-link">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                        <span>Patents</span>
+                    </a>
+                </div>
+                <!-- Grid Button 4 -->
+                <div class="ott-icon-button">
+                    <a href="https://research.rice.edu/ott/licensing" class="ott-icon-link">
+                      <i class="fa-solid fa-earth-americas"></i>
+                        <span>Commercialization</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+      
+       <!-- Right Side: Auto Slider -->
+       <div class="ott-split-half ott-video-section">
+
+        <div class="ott-video-container">
+
+            <!-- YouTube Playlist Embed with Random Playback -->
+            <div id="youtube-player-container" class="header-video">
+                <div id="player"></div>
+            </div>
+
+        </div>
+        
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
+
+
+
+<footer class="ott-footer">
+    <div class="ott-footer-container">
+      <!-- Key Links Section -->
+      <div class="ott-footer-column">
+        <h3 class="ott-footer-heading">KEY LINKS</h3>
+        <ul class="ott-footer-list">
+          <li><a href="https://rice.wellspringsoftware.net/kms/onlinesubmissions/submissionform/?survey_id=6">Submit Invention Disclosure</a></li>
+          <li><a href="https://rice.wellspringsoftware.net/kms/onlinesubmissions/submissionform/?survey_id=3">Request NDA/CDA</a></li>
+          <li><a href="https://rice.flintbox.com/technologies">Available Technologies</a></li>
+        </ul>
+      </div>
+  
+      <!-- Office of Research Section -->
+      <div class="ott-footer-column">
+        <h3 class="ott-footer-heading">CONTACT US</h3>
+        <div class="contact-info">
+          <p><i class="fa-solid fa-phone" style="color:#13133E"></i> <a href="tel:7133486188">+1 (713) 348-6188</a></p>
+          <p><i class="fa-regular fa-envelope" style="color:#13133E"></i> <a href="mailto:techtran@rice.edu">techtran@rice.edu</a></p>
+          
+        <div class="social-icon">
+
+            <div class="social-icons">
+                <a href="https://twitter.com/riceott" aria-label="Twitter">
+                  <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/riceott/" aria-label="LinkedIn">
+                  <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCzPb0hOV1k4cDX1KUy5xlEw" aria-label="YouTube">
+                  <i class="fa-brands fa-youtube"></i>
+                </a>
+              </div>
+        </div>
+
+
+
+        </div>
+      </div>
+  
+      <!-- Contact Information Section -->
+      <div class="ott-footer-column">
+        <h3 class="ott-footer-heading">MAILING ADDRESS</h3>
+        <address class="ott-add">
+          Attn: [Recipient]<br>
+          Office of Technology Transfer<br>
+          Rice University - Lovett Hall <br>
+          6100 Main Street, Entrance D, <br>Suite 204<br>
+          Houston, Texas 77005
+        </address>
+  
+      </div>
+  
+      <!-- Map Section -->
+      <div class="ott-footer-column map-column">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6930.050603786244!2d-95.40040368884469!3d29.71902633381173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c07937ee3e83%3A0x392a6a1e48609c9a!2sLovett%20Hall!5e0!3m2!1sen!2sus!4v1720805070093!5m2!1sen!2sus" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Rice University Map"
+        ></iframe>
+      </div>
+    </div>
+  
+</footer>
+
+<script>
+  let activePanel = null;
+  let lockedPanel = null;
+  let hoverTimeout = null;
+
+  function getType(id) {
+    const item = document.querySelector(`.nav-item[data-panel="${id}"]`);
+    return item ? item.dataset.type : 'full';
+  }
+
+  function openPanel(id) {
+    if (activePanel === id) return;
+    if (activePanel) closePanelVisual(activePanel);
+
+    const navItem = document.querySelector(`.nav-item[data-panel="${id}"]`);
+    const btn = navItem.querySelector('button');
+    navItem.classList.add('active');
+    btn.setAttribute('aria-expanded', 'true');
+
+    if (getType(id) === 'full') {
+      document.getElementById('panel-' + id).classList.add('open');
+    }
+
+    document.getElementById('navOverlay').classList.add('visible');
+    activePanel = id;
+  }
+
+  function closePanelVisual(id) {
+    const navItem = document.querySelector(`.nav-item[data-panel="${id}"]`);
+    const btn = navItem.querySelector('button');
+    navItem.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+
+    if (getType(id) === 'full') {
+      document.getElementById('panel-' + id).classList.remove('open');
+    }
+  }
+
+  function closeAll() {
+    if (activePanel) {
+      closePanelVisual(activePanel);
+      activePanel = null;
+    }
+    lockedPanel = null;
+    document.getElementById('navOverlay').classList.remove('visible');
+  }
+
+  // Hover + click on each nav item
+  document.querySelectorAll('.nav-item[data-panel]').forEach(item => {
+    const id = item.dataset.panel;
+    const btn = item.querySelector('button');
+
+    item.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimeout);
+      openPanel(id);
+    });
+
+    item.addEventListener('mouseleave', () => {
+      if (lockedPanel === id) return;
+      hoverTimeout = setTimeout(() => {
+        if (activePanel === id && lockedPanel !== id) closeAll();
+      }, 150);
+    });
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (lockedPanel === id) {
+        lockedPanel = null;
+        closeAll();
+      } else {
+        openPanel(id);
+        lockedPanel = id;
+      }
+    });
+  });
+
+  // Keep full-width panels open on hover
+  document.querySelectorAll('.dropdown-panel-full').forEach(panel => {
+    panel.addEventListener('mouseenter', () => clearTimeout(hoverTimeout));
+    panel.addEventListener('mouseleave', () => {
+      const id = panel.id.replace('panel-', '');
+      if (lockedPanel === id) return;
+      hoverTimeout = setTimeout(() => {
+        if (activePanel === id && lockedPanel !== id) closeAll();
+      }, 150);
+    });
+  });
+
+  // Overlay + Escape
+  document.getElementById('navOverlay').addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const menuItems = document.querySelectorAll('.menu-bar[aria-haspopup="true"]');
+      
+      // Setup keyboard navigation
+      menuItems.forEach(item => {
+        item.addEventListener('keydown', handleMenuKeyDown);
+        item.addEventListener('click', toggleSubmenu);
+        
+        // Initialize all submenus as closed
+        if (item.getAttribute('aria-haspopup') === 'true') {
+          item.setAttribute('aria-expanded', 'false');
+          
+          // Add hover event handlers for mouse users
+          const parentLi = item.parentElement;
+          parentLi.addEventListener('mouseenter', function() {
+            item.setAttribute('aria-expanded', 'true');
+          });
+          
+          parentLi.addEventListener('mouseleave', function() {
+            item.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+      
+      // Handle all submenu items
+      const submenuItems = document.querySelectorAll('.menu ul.menu .menu-bar');
+      submenuItems.forEach(item => {
+        item.addEventListener('keydown', handleSubmenuKeyDown);
+        
+        if (item.getAttribute('aria-haspopup') === 'true') {
+          item.addEventListener('click', toggleSubmenu);
+          
+          // Add hover event handlers for mouse users
+          const parentLi = item.parentElement;
+          parentLi.addEventListener('mouseenter', function() {
+            item.setAttribute('aria-expanded', 'true');
+          });
+          
+          parentLi.addEventListener('mouseleave', function() {
+            item.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+      
+      // Close menus when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.menu-bars')) {
+          closeAllMenus();
+        }
+      });
+      
+      // Handle Escape key to close menus
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeAllMenus();
+          // Focus the first top-level menu item
+          const firstMenuItem = document.querySelector('.menu > li > .menu-bar');
+          if (firstMenuItem) {
+            firstMenuItem.focus();
+          }
+        }
+      });
+      
+      // Functions for menu interactions
+      function toggleSubmenu(event) {
+        event.preventDefault();
+        
+        const currentItem = event.currentTarget;
+        const isExpanded = currentItem.getAttribute('aria-expanded') === 'true';
+        
+        // Close other open menus at the same level
+        const siblings = getSiblings(currentItem.parentElement);
+        siblings.forEach(sibling => {
+          const siblingLink = sibling.querySelector('[aria-expanded="true"]');
+          if (siblingLink) {
+            siblingLink.setAttribute('aria-expanded', 'false');
+          }
+        });
+        
+        // Toggle current submenu
+        currentItem.setAttribute('aria-expanded', !isExpanded);
+        
+        // Make submenu items focusable or not
+        const submenu = currentItem.nextElementSibling;
+        if (submenu && submenu.classList.contains('menu')) {
+          const submenuLinks = submenu.querySelectorAll('.menu-bar');
+          submenuLinks.forEach(link => {
+            link.setAttribute('tabindex', !isExpanded ? '0' : '-1');
+          });
+          
+          // If opening, focus the first item
+          if (!isExpanded) {
+            setTimeout(() => {
+              submenuLinks[0].focus();
+            }, 100);
+          }
+        }
+      }
+      
+      function handleMenuKeyDown(event) {
+        const currentItem = event.currentTarget;
+        
+        switch (event.key) {
+          case 'ArrowDown':
+            event.preventDefault();
+            // Open submenu and focus first item
+            if (currentItem.getAttribute('aria-expanded') === 'false') {
+              currentItem.click();
+            }
+            break;
+            
+          case 'ArrowRight':
+            event.preventDefault();
+            // Move to next top-level menu item
+            const nextMenuItem = currentItem.parentElement.nextElementSibling;
+            if (nextMenuItem) {
+              const nextLink = nextMenuItem.querySelector('.menu-bar');
+              if (nextLink) {
+                nextLink.focus();
+              }
+            }
+            break;
+            
+          case 'ArrowLeft':
+            event.preventDefault();
+            // Move to previous top-level menu item
+            const prevMenuItem = currentItem.parentElement.previousElementSibling;
+            if (prevMenuItem) {
+              const prevLink = prevMenuItem.querySelector('.menu-bar');
+              if (prevLink) {
+                prevLink.focus();
+              }
+            }
+            break;
+            
+          case 'Enter':
+          case ' ':
+            event.preventDefault();
+            currentItem.click();
+            break;
+        }
+      }
+      
+      function handleSubmenuKeyDown(event) {
+        const currentItem = event.currentTarget;
+        const parentMenu = currentItem.closest('ul.menu');
+        const menuItems = Array.from(parentMenu.querySelectorAll(':scope > li > .menu-bar'));
+        const currentIndex = menuItems.indexOf(currentItem);
+        
+        switch (event.key) {
+          case 'ArrowDown':
+            event.preventDefault();
+            // Move to next item in submenu
+            if (currentIndex < menuItems.length - 1) {
+              menuItems[currentIndex + 1].focus();
+            }
+            break;
+            
+          case 'ArrowUp':
+            event.preventDefault();
+            // Move to previous item in submenu
+            if (currentIndex > 0) {
+              menuItems[currentIndex - 1].focus();
+            } else {
+              // If at the top of a submenu, go back to parent
+              const parentMenuItem = parentMenu.parentElement.querySelector('.menu-bar');
+              if (parentMenuItem) {
+                parentMenuItem.focus();
+              }
+            }
+            break;
+            
+          case 'ArrowRight':
+            // If has submenu, open it
+            if (currentItem.getAttribute('aria-haspopup') === 'true') {
+              event.preventDefault();
+              if (currentItem.getAttribute('aria-expanded') === 'false') {
+                currentItem.click();
+              }
+            }
+            break;
+            
+          case 'ArrowLeft':
+            event.preventDefault();
+            // Close current submenu and move focus to parent
+            const parentMenuItem = parentMenu.parentElement.querySelector('.menu-bar');
+            if (parentMenuItem) {
+              if (parentMenuItem.getAttribute('aria-expanded') === 'true') {
+                parentMenuItem.setAttribute('aria-expanded', 'false');
+                parentMenuItem.focus();
+              }
+            }
+            break;
+            
+          case 'Enter':
+          case ' ':
+            event.preventDefault();
+            currentItem.click();
+            break;
+        }
+      }
+      
+      function closeAllMenus() {
+        const expandedMenus = document.querySelectorAll('[aria-expanded="true"]');
+        expandedMenus.forEach(menu => {
+          menu.setAttribute('aria-expanded', 'false');
+        });
+        
+        // Make all submenu items not focusable
+        const submenuLinks = document.querySelectorAll('ul.menu ul.menu .menu-bar');
+        submenuLinks.forEach(link => {
+          link.setAttribute('tabindex', '-1');
+        });
+      }
+      
+      function getSiblings(element) {
+        return Array.from(element.parentNode.children).filter(child => child !== element);
+      }
+    });
+</script>
+
+
+<script>
+  'use strict';
+
+  // CarouselTablist Constructor
+  // takes options object: { moreaccessible: boolean, paused: boolean, norotate: boolean }
+  // defaults are: { moreaccessible: false, paused: false, norotate: false }
+  var CarouselTablist = function (node, options) {
+    // Merge passed options with defaults
+    options = Object.assign(
+      { moreaccessible: false, paused: false, norotate: false },
+      options || {}
+    );
+
+    // A prefers-reduced-motion user setting must always override autoplay
+    var hasReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (hasReducedMotion.matches) {
+      options.paused = true;
+    }
+
+    /* DOM properties */
+    this.domNode = node;
+    this.tablistNode = node.querySelector('[role=tablist]');
+    this.containerNode = node.querySelector('.ott-carousel-items');
+
+    this.tabNodes = [];
+    this.tabpanelNodes = [];
+
+    this.liveRegionNode = node.querySelector('.ott-carousel-items');
+    this.pausePlayButtonNode = node.querySelector('.controls button.rotation');
+
+    this.playLabel = 'Start automatic slide show';
+    this.pauseLabel = 'Stop automatic slide show';
+
+    /* State properties */
+    this.hasUserActivatedPlay = false; // Set when the user activates the play/pause button
+    this.isAutoRotationDisabled = options.norotate; // Property for disabling auto rotation
+    this.isPlayingEnabled = !options.paused; // Property also set in updatePlaying method
+    this.timeInterval = 7000; // Length of slide rotation in ms
+    this.currentIndex = 0; // Index of current slide (starting with first slide)
+    this.slideTimeout = null; // Save reference to setTimeout
+    this.hasFocus = false; // Track if carousel has focus 
+    this.hasHover = false; // Track if carousel has hover
+
+    // Initialize tabs
+    if (this.tablistNode) {
+      this.tablistNode.addEventListener('focusin', this.handleTabFocus.bind(this));
+      this.tablistNode.addEventListener('focusout', this.handleTabBlur.bind(this));
+
+      var nodes = this.tablistNode.querySelectorAll('[role="tab"]');
+
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+
+        this.tabNodes.push(n);
+
+        n.addEventListener('keydown', this.handleTabKeydown.bind(this));
+        n.addEventListener('click', this.handleTabClick.bind(this));
+
+        // Initialize tabpanels
+        var tabpanelId = n.getAttribute('aria-controls');
+        var tabpanelNode = document.getElementById(tabpanelId);
+
+        if (tabpanelNode) {
+          this.tabpanelNodes.push(tabpanelNode);
+
+          // Support stopping rotation when any element receives focus in the tabpanel
+          tabpanelNode.addEventListener('focusin', this.handleTabpanelFocusIn.bind(this));
+          tabpanelNode.addEventListener('focusout', this.handleTabpanelFocusOut.bind(this));
+
+          var imageLink = tabpanelNode.querySelector('.ott-carousel-image a');
+
+          if (imageLink) {
+            imageLink.addEventListener('focus', this.handleImageLinkFocus.bind(this));
+            imageLink.addEventListener('blur', this.handleImageLinkBlur.bind(this));
+          }
+        } else {
+          console.warn('Tabpanel not found: ' + tabpanelId);
+          this.tabpanelNodes.push(null);
+        }
+      }
+    } else {
+      console.error('Tablist not found in carousel');
+    }
+
+    // Pause Button
+    if (this.pausePlayButtonNode) {
+      this.pausePlayButtonNode.addEventListener('click', this.handlePausePlayButtonClick.bind(this));
+    }
+
+    // Handle hover events
+    this.domNode.addEventListener('mouseover', this.handleMouseOver.bind(this));
+    this.domNode.addEventListener('mouseout', this.handleMouseOut.bind(this));
+
+    // Initialize behavior based on options
+    this.enableOrDisableAutoRotation(options.norotate);
+    this.updatePlaying(!options.paused && !options.norotate);
+    this.setAccessibleStyling(options.moreaccessible);
+    
+    // Start with the first panel active
+    this.showTabpanel(0, false);
+    
+    // Begin rotation
+    this.rotateSlides();
+  };
+
+  /* Public function to disable/enable rotation and if false, hide pause/play button */
+  CarouselTablist.prototype.enableOrDisableAutoRotation = function (disable) {
+    this.isAutoRotationDisabled = disable;
+    if (this.pausePlayButtonNode) {
+      this.pausePlayButtonNode.hidden = disable;
+    }
+  };
+
+  /* Public function to update controls/caption styling */
+  CarouselTablist.prototype.setAccessibleStyling = function (accessible) {
+    if (accessible) {
+      this.domNode.classList.add('ott-carousel-tablist-moreaccessible');
+    } else {
+      this.domNode.classList.remove('ott-carousel-tablist-moreaccessible');
+    }
+  };
+
+  CarouselTablist.prototype.hideTabpanel = function (index) {
+    if (index < 0 || index >= this.tabNodes.length) {
+      return;
+    }
+    
+    var tabNode = this.tabNodes[index];
+    var panelNode = this.tabpanelNodes[index];
+
+    tabNode.setAttribute('aria-selected', 'false');
+    tabNode.setAttribute('tabindex', '-1');
+
+    if (panelNode) {
+      panelNode.classList.remove('active');
+    }
+  };
+
+  CarouselTablist.prototype.showTabpanel = function (index, moveFocus) {
+    if (index < 0 || index >= this.tabNodes.length) {
+      return;
+    }
+    
+    var tabNode = this.tabNodes[index];
+    var panelNode = this.tabpanelNodes[index];
+
+    tabNode.setAttribute('aria-selected', 'true');
+    tabNode.removeAttribute('tabindex');
+
+    if (panelNode) {
+      panelNode.classList.add('active');
+    }
+
+    if (moveFocus) {
+      tabNode.focus();
+    }
+  };
+
+  CarouselTablist.prototype.setSelectedTab = function (index, moveFocus) {
+    if (index === this.currentIndex) {
+      return;
+    }
+    
+    // Hide all panels
+    for (var i = 0; i < this.tabNodes.length; i++) {
+      this.hideTabpanel(i);
+    }
+    
+    this.currentIndex = index;
+    this.showTabpanel(this.currentIndex, moveFocus);
+  };
+
+  CarouselTablist.prototype.setSelectedToPreviousTab = function (moveFocus) {
+    var nextIndex = this.currentIndex - 1;
+
+    if (nextIndex < 0) {
+      nextIndex = this.tabNodes.length - 1;
+    }
+
+    this.setSelectedTab(nextIndex, moveFocus);
+  };
+
+  CarouselTablist.prototype.setSelectedToNextTab = function (moveFocus) {
+    var nextIndex = this.currentIndex + 1;
+
+    if (nextIndex >= this.tabNodes.length) {
+      nextIndex = 0;
+    }
+
+    this.setSelectedTab(nextIndex, moveFocus);
+  };
+
+  CarouselTablist.prototype.rotateSlides = function () {
+    if (this.slideTimeout) {
+      clearTimeout(this.slideTimeout);
+    }
+    
+    if (!this.isAutoRotationDisabled) {
+      if ((!this.hasFocus && !this.hasHover && this.isPlayingEnabled) || this.hasUserActivatedPlay) {
+        this.setSelectedToNextTab(false);
+      }
+    }
+
+    this.slideTimeout = setTimeout(this.rotateSlides.bind(this), this.timeInterval);
+  };
+
+  CarouselTablist.prototype.updatePlaying = function (play) {
+    this.isPlayingEnabled = play;
+
+    if (this.pausePlayButtonNode) {
+      if (play) {
+        this.pausePlayButtonNode.setAttribute('aria-label', this.pauseLabel);
+        this.pausePlayButtonNode.classList.remove('play');
+        this.pausePlayButtonNode.classList.add('pause');
+        this.liveRegionNode.setAttribute('aria-live', 'off');
+      } else {
+        this.pausePlayButtonNode.setAttribute('aria-label', this.playLabel);
+        this.pausePlayButtonNode.classList.remove('pause');
+        this.pausePlayButtonNode.classList.add('play');
+        this.liveRegionNode.setAttribute('aria-live', 'polite');
+      }
+    }
+  };
+
+  /* Event Handlers */
+  CarouselTablist.prototype.handleImageLinkFocus = function () {
+    if (this.liveRegionNode) {
+      this.liveRegionNode.classList.add('focus');
+    }
+  };
+
+  CarouselTablist.prototype.handleImageLinkBlur = function () {
+    if (this.liveRegionNode) {
+      this.liveRegionNode.classList.remove('focus');
+    }
+  };
+
+  CarouselTablist.prototype.handleMouseOver = function (event) {
+    if (this.pausePlayButtonNode && !this.pausePlayButtonNode.contains(event.target)) {
+      this.hasHover = true;
+    }
+  };
+
+  CarouselTablist.prototype.handleMouseOut = function () {
+    this.hasHover = false;
+  };
+
+  CarouselTablist.prototype.handlePausePlayButtonClick = function () {
+    this.hasUserActivatedPlay = !this.isPlayingEnabled;
+    this.updatePlaying(!this.isPlayingEnabled);
+  };
+
+  /* Event Handlers for Tabs */
+  CarouselTablist.prototype.handleTabKeydown = function (event) {
+    var flag = false;
+
+    switch (event.key) {
+      case 'ArrowRight':
+        this.setSelectedToNextTab(true);
+        flag = true;
+        break;
+
+      case 'ArrowLeft':
+        this.setSelectedToPreviousTab(true);
+        flag = true;
+        break;
+
+      case 'Home':
+        this.setSelectedTab(0, true);
+        flag = true;
+        break;
+
+      case 'End':
+        this.setSelectedTab(this.tabNodes.length - 1, true);
+        flag = true;
+        break;
+
+      default:
+        break;
+    }
+
+    if (flag) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+  };
+
+  CarouselTablist.prototype.handleTabClick = function (event) {
+    var index = this.tabNodes.indexOf(event.currentTarget);
+    this.setSelectedTab(index, true);
+  };
+
+  CarouselTablist.prototype.handleTabFocus = function () {
+    if (this.tablistNode) {
+      this.tablistNode.classList.add('focus');
+    }
+    if (this.liveRegionNode) {
+      this.liveRegionNode.setAttribute('aria-live', 'polite');
+    }
+    this.hasFocus = true;
+  };
+
+  CarouselTablist.prototype.handleTabBlur = function () {
+    if (this.tablistNode) {
+      this.tablistNode.classList.remove('focus');
+    }
+    if (this.liveRegionNode && this.isPlayingEnabled) {
+      this.liveRegionNode.setAttribute('aria-live', 'off');
+    }
+    this.hasFocus = false;
+  };
+
+  /* Event Handlers for Tabpanels */
+  CarouselTablist.prototype.handleTabpanelFocusIn = function () {
+    this.hasFocus = true;
+  };
+
+  CarouselTablist.prototype.handleTabpanelFocusOut = function () {
+    this.hasFocus = false;
+  };
+
+  /* Initialize Carousel Tablists on page load*/
+  function initCarousels() {
+    var carouselEls = document.querySelectorAll('.ott-carousel-tablist');
+    console.log('Found ' + carouselEls.length + ' carousels');
+    
+    var carousels = [];
+    
+    // Default carousel options
+    var carouselOptions = {
+      moreaccessible: false,
+      paused: false,
+      norotate: false
+    };
+
+    // Initialize each carousel
+    carouselEls.forEach(function (node) {
+      carousels.push(new CarouselTablist(node, carouselOptions));
+    });
+  }
+
+  // Initialize on DOM load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    // If DOMContentLoaded has already fired, run init immediately
+    initCarousels();
+  }
+
+
+</script>
+
+<script>
+// YouTube Player Configuration
+var player;
+var playlistId = 'PLGWw8OKUM1em0irqb_pyImH_s2EG7YOhQ'; // Your YouTube playlist ID
+var videoIds = []; // Will be populated with video IDs from playlist
+
+// This function creates an <iframe> (and YouTube player) after the API code downloads
+function onYouTubeIframeAPIReady() {
+    // Create initial player with playlist
+    player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        playerVars: {
+            'listType': 'playlist',
+            'list': playlistId,
+            'autoplay': 1,
+            'mute': 1, // Must be muted for autoplay to work
+            'controls': 1, // Show controls
+            'autohide': 0, // Don't auto-hide controls (0 = always show, 1 = auto-hide, 2 = auto-hide progress bar only)
+            'loop': 1,
+            'rel': 0, // Don't show related videos from other channels
+            'modestbranding': 1, // Minimal YouTube branding
+            'iv_load_policy': 3, // Hide annotations
+            'fs': 1, // Allow fullscreen
+            'playsinline': 1, // Play inline on mobile
+            'showinfo': 0 // Hide video title and uploader before video starts
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+// When player is ready, shuffle to random video
+function onPlayerReady(event) {
+    // Get playlist and shuffle to random video
+    setTimeout(function() {
+        var playlist = player.getPlaylist();
+        if (playlist && playlist.length > 0) {
+            // Pick a random video index
+            var randomIndex = Math.floor(Math.random() * playlist.length);
+            // Jump to random video
+            player.playVideoAt(randomIndex);
+        }
+    }, 1000); // Small delay to ensure playlist is loaded
+}
+
+// Optional: Handle state changes if needed
+function onPlayerStateChange(event) {
+    // Can add custom behavior here when video ends, etc.
+    if (event.data == YT.PlayerState.ENDED) {
+        // When a video ends, you could shuffle again if desired
+        var playlist = player.getPlaylist();
+        if (playlist && playlist.length > 0) {
+            var randomIndex = Math.floor(Math.random() * playlist.length);
+            player.playVideoAt(randomIndex);
+        }
+    }
+}
+
+// Alternative: If you prefer to use individual video IDs instead of a playlist
+// Replace the array below with your video IDs
+var alternativeVideoIds = [
+    // 'VIDEO_ID_1',
+    // 'VIDEO_ID_2', 
+    // 'VIDEO_ID_3',
+    // Add your video IDs here
+];
+
+// Function to create player with individual videos (alternative approach)
+function createPlayerWithVideos() {
+    if (alternativeVideoIds.length > 0) {
+        // Pick random video
+        var randomVideo = alternativeVideoIds[Math.floor(Math.random() * alternativeVideoIds.length)];
+        
+        player = new YT.Player('player', {
+            height: '100%',
+            width: '100%',
+            videoId: randomVideo,
+            playerVars: {
+                'autoplay': 1,
+                'mute': 1,
+                'controls': 1,
+                'loop': 1,
+                'playlist': alternativeVideoIds.join(','),
+                'rel': 0,
+                'modestbranding': 1,
+                'iv_load_policy': 3,
+                'fs': 1,
+                'playsinline': 1
+            },
+            events: {
+                'onReady': function(event) {
+                    event.target.setShuffle(true);
+                    event.target.playVideo();
+                },
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+}
+
+</script>
